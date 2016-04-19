@@ -17,6 +17,81 @@ class Handler {
   }
 }
 
+class SubjectDataHandler extends Handler {
+  constructor(parent) {
+    super()
+    this.parent = parent
+    this.datas = []
+    this.data = {}
+  }
+  opentag(opts) {
+    if (opts.name == 'subject_data') {
+      this.data = {}
+    }
+    this.tagName = opts.name
+    return this
+  }
+  text(opts) {
+    switch (this.tagName) {
+      case "id":
+      case "subject_field_id":
+        this.data[this.tagName] = parseInt(opts, 10)
+        break
+      case "value":
+      case "subject_field_label":
+        this.data[this.tagName] = opts
+        break
+    }
+    return this
+  }
+  closetag(name) {
+    this.tagName = null
+    if (name == "subject_data") {
+      this.datas.push(this.data)
+    } else if (name == "subject_datas") {
+      this.parent.onchildover(this.datas)
+      return this.parent
+    }
+    return this
+  }
+}
+
+class TagsHandler extends Handler {
+  constructor(parent) {
+    super()
+    this.parent = parent
+    this.tags = []
+  }
+  opentag(opts) {
+    this.tagName = opts.name
+    return this
+  }
+  text(opts) {
+    switch (this.tagName) {
+      case "id":
+        this.id = parseInt(opts, 10)
+        break
+      case "name":
+        this.name = opts
+        break
+    }
+    return this
+  }
+  closetag(name) {
+    this.tagName = null
+    if (name == "tag") {
+      this.tags.push({
+        id: this.id,
+        name: this.name
+      })
+    } else if (name == "tags") {
+      this.parent.onchildover(this.tags)
+      return this.parent
+    }
+    return this
+  }
+}
+
 class ContactDataHandler extends Handler {
   constructor(parent) {
     super()
@@ -72,10 +147,13 @@ class PersonHandler extends Handler {
     this.numeric = (opts.attributes.type === 'integer')
     this.datetime = (opts.attributes.type === 'datetime')
     this.tagValue = null
-
     switch (this.tagName) {
       case "contact-data":
         return new ContactDataHandler(this)
+      case "subject_datas":
+        return new SubjectDataHandler(this)
+      case "tags":
+        return new TagsHandler(this)
       default:
         return this
     }
@@ -102,20 +180,23 @@ class PersonHandler extends Handler {
       case "subject-datas":
       case "tags":
         break;
+      case "person":
+        this.parent.onchildover(this.person)
+        return this.parent
       default:
         this.person[tagName] = this.tagValue
         break;
     }
-    if (tagName == 'person') {
-      return this.parent.onchildover(this.person)
-    } else {
-      return this
-    }
+    return this
   }
   onchildover(data) {
     if (this.tagName == 'contact-data') {
       this.person.emails = data.emails
       this.person.phones = data.phones
+    } else if (this.tagName == 'tags') {
+      this.person.tags = data
+    } else if (this.tagName == 'subject_datas') {
+      this.person.subject_datas = data
     }
   }
 }
