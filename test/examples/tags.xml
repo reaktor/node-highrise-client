@@ -1,0 +1,96 @@
+<parties type="array">
+  <party type="Person">
+    <author-id type="integer">1512835</author-id>
+    <background nil="true"/>
+    <company-id type="integer" nil="true"/>
+    <created-at type="datetime">2016-03-09T14:39:46Z</created-at>
+    <first-name>Jack</first-name>
+    <group-id type="integer" nil="true"/>
+    <id type="integer">255094849</id>
+    <last-name>Example</last-name>
+    <owner-id type="integer" nil="true"/>
+    <title nil="true"/>
+    <updated-at type="datetime">2016-04-18T06:07:13Z</updated-at>
+    <visible-to>Everyone</visible-to>
+    <company-name nil="true"/>
+    <linkedin-url nil="true"/>
+    <avatar_url>
+      https://example.org
+    </avatar_url>
+    <tags type="array">
+      <tag>
+        <id type="integer">1234</id>
+        <name>tag1</name>
+      </tag>
+      <tag>
+        <id type="integer">2345</id>
+        <name>tag2</name>
+      </tag>
+      <tag>
+        <id type="integer">3456</id>
+        <name>tag3</name>
+      </tag>
+    </tags>
+    <contact-data>
+      <instant-messengers type="array"/>
+      <web-addresses type="array"/>
+      <twitter-accounts type="array"/>
+      <email-addresses type="array">
+        <email-address>
+          <address>mail@example.org</address>
+          <id type="integer">10582397</id>
+          <location>Work</location>
+        </email-address>
+      </email-addresses>
+      <addresses type="array"/>
+      <phone-numbers type="array"/>
+    </contact-data>
+  </party>
+  <party type="Person">
+    <author-id type="integer">1512833</author-id>
+    <background nil="true"/>
+    <company-id type="integer" nil="true"/>
+    <created-at type="datetime">2016-03-09T14:39:46Z</created-at>
+    <first-name>Jack</first-name>
+    <group-id type="integer" nil="true"/>
+    <id type="integer">255094841</id>
+    <last-name>Example</last-name>
+    <owner-id type="integer" nil="true"/>
+    <title nil="true"/>
+    <updated-at type="datetime">2016-04-18T06:07:13Z</updated-at>
+    <visible-to>Everyone</visible-to>
+    <company-name nil="true"/>
+    <linkedin-url nil="true"/>
+    <avatar_url>
+      https://example.org
+    </avatar_url>
+    <tags type="array">
+      <tag>
+        <id type="integer">1234</id>
+        <name>tag1</name>
+      </tag>
+      <tag>
+        <id type="integer">2345</id>
+        <name>tag2</name>
+      </tag>
+      <tag>
+        <id type="integer">3456</id>
+        <name>tag3</name>
+      </tag>
+    </tags>
+    <contact-data>
+      <instant-messengers type="array"/>
+      <web-addresses type="array"/>
+      <twitter-accounts type="array"/>
+      <email-addresses type="array">
+        <email-address>
+          <address>mail@example.org</address>
+          <id type="integer">10582397</id>
+          <location>Work</location>
+        </email-address>
+      </email-addresses>
+      <addresses type="array"/>
+      <phone-numbers type="array"/>
+    </contact-data>
+  </party>
+</parties>

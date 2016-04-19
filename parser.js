@@ -137,10 +137,11 @@ class ContactDataHandler extends Handler {
 }
 
 class PersonHandler extends Handler {
-  constructor(parent) {
+  constructor(parent, rootTagName) {
     super()
     this.parent = parent
     this.person = {}
+    this.rootTagName = rootTagName || "person"
   }
   opentag(opts) {
     this.tagName = opts.name
@@ -170,7 +171,7 @@ class PersonHandler extends Handler {
         this.tagValue = new Date(value)
       }
     } else {
-      this.tagValue = opts
+      this.tagValue = opts.trim()
     }
     return this
   }
@@ -180,7 +181,7 @@ class PersonHandler extends Handler {
       case "subject-datas":
       case "tags":
         break;
-      case "person":
+      case this.rootTagName:
         this.parent.onchildover(this.person)
         return this.parent
       default:
@@ -209,10 +210,14 @@ class RootHandler extends Handler {
     switch (opts.name) {
       case 'person':
         return new PersonHandler(this)
-        break;
+      case 'party':
+        if (opts.attributes.type == 'Person') {
+          return new PersonHandler(this, "party")
+        } else {
+          return this
+        }
       default:
         return this
-        break;
     }
   }
   onchildover(data) {

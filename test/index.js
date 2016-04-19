@@ -6,6 +6,13 @@ describe('Highrise', () => {
   describe('Parser', () => {
     it('should parse person records', () => {
       readToParser('test/examples/person.xml', new Parser()).then((person) => {
+        //console.log(person)
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
+    it('should parse tags records', () => {
+      readToParser('test/examples/tags.xml', new Parser()).then((person) => {
         console.log(person)
       }).catch((err) => {
         console.log(err.stack)
