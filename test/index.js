@@ -20,6 +20,14 @@ describe('Highrise', () => {
         console.log(err.stack)
       })
     })
+    it('should parse email records', (done) => {
+      readToParser('test/examples/emails.xml', new Parser()).then((emails) => {
+        assert.equal(4, emails.length)
+        done()
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
   })
 })
 

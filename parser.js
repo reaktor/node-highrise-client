@@ -136,6 +136,35 @@ class ContactDataHandler extends Handler {
   }
 }
 
+class EmailHandler extends Handler {
+  constructor(parent) {
+    super()
+    this.parent = parent
+    this.email = {}
+  }
+  opentag(opts) {
+    this.tagName = opts.name
+    this.type = opts.attributes.type || "text"
+    this.tagValue = null
+    return this
+  }
+  text(opts) {
+    this.tagValue = parseTextNode(opts, this.type)
+    return this
+  }
+  closetag(tagName) {
+    switch (tagName) {
+      case "email":
+        this.parent.onchildover(this.email)
+        return this.parent
+      default:
+        this.email[tagName] = this.tagValue
+        break;
+    }
+    return this
+  }
+}
+
 class PersonHandler extends Handler {
   constructor(parent, rootTagName) {
     super()
@@ -145,8 +174,7 @@ class PersonHandler extends Handler {
   }
   opentag(opts) {
     this.tagName = opts.name
-    this.numeric = (opts.attributes.type === 'integer')
-    this.datetime = (opts.attributes.type === 'datetime')
+    this.type = opts.attributes.type || "text"
     this.tagValue = null
     switch (this.tagName) {
       case "contact-data":
@@ -160,19 +188,7 @@ class PersonHandler extends Handler {
     }
   }
   text(opts) {
-    if (this.numeric) {
-      const value = parseInt(opts, 10)
-      if (!isNaN(value)) {
-        this.tagValue = value
-      }
-    } else if (this.datetime) {
-      const value = Date.parse(opts)
-      if (!isNaN(value)) {
-        this.tagValue = new Date(value)
-      }
-    } else {
-      this.tagValue = opts.trim()
-    }
+    this.tagValue = parseTextNode(opts, this.type)
     return this
   }
   closetag(tagName) {
@@ -208,6 +224,8 @@ class RootHandler extends Handler {
   }
   opentag(opts) {
     switch (opts.name) {
+      case 'email':
+        return new EmailHandler(this)
       case 'person':
         return new PersonHandler(this)
       case 'party':
@@ -261,5 +279,21 @@ module.exports = class Parser {
   end() {
     this.parser.close()
     return this.handler.value
+  }
+}
+
+function parseTextNode(text, type) {
+  if (type == 'integer') {
+    const value = parseInt(text, 10)
+    if (!isNaN(value)) {
+      return value
+    }
+  } else if (type == 'datetime') {
+    const value = Date.parse(text)
+    if (!isNaN(value)) {
+      return new Date(value)
+    }
+  } else {
+    return text.trim()
   }
 }
