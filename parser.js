@@ -136,11 +136,12 @@ class ContactDataHandler extends Handler {
   }
 }
 
-class NoteHandler extends Handler {
-  constructor(parent) {
+class GenericTagHandler extends Handler {
+  constructor(parent, rootTagName) {
     super()
     this.parent = parent
-    this.note = {}
+    this.data = {}
+    this.rootTagName = rootTagName
   }
   opentag(opts) {
     this.tagName = opts.name
@@ -154,43 +155,26 @@ class NoteHandler extends Handler {
   }
   closetag(tagName) {
     switch (tagName) {
-      case "note":
-        this.parent.onchildover(this.note)
+      case this.rootTagName:
+        this.parent.onchildover(this.data)
         return this.parent
       default:
-        this.note[tagName] = this.tagValue
+        this.data[tagName] = this.tagValue
         break;
     }
     return this
   }
 }
 
-class EmailHandler extends Handler {
+class NoteHandler extends GenericTagHandler {
   constructor(parent) {
-    super()
-    this.parent = parent
-    this.email = {}
+    super(parent, "note")
   }
-  opentag(opts) {
-    this.tagName = opts.name
-    this.type = opts.attributes.type || "text"
-    this.tagValue = null
-    return this
-  }
-  text(opts) {
-    this.tagValue = parseTextNode(opts, this.type)
-    return this
-  }
-  closetag(tagName) {
-    switch (tagName) {
-      case "email":
-        this.parent.onchildover(this.email)
-        return this.parent
-      default:
-        this.email[tagName] = this.tagValue
-        break;
-    }
-    return this
+}
+
+class EmailHandler extends GenericTagHandler {
+  constructor(parent) {
+    super(parent, "email")
   }
 }
 
