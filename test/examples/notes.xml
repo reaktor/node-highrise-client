@@ -1,0 +1,53 @@
+<notes type="array">
+  <note>
+    <author-id type="integer">946123</author-id>
+    <collection-id type="integer" nil="true"/>
+    <collection-type nil="true"/>
+    <created-at type="datetime">2014-02-11T07:24:42Z</created-at>
+    <group-id type="integer" nil="true"/>
+    <id type="integer">179173138</id>
+    <owner-id type="integer" nil="true"/>
+    <subject-id type="integer">125011790</subject-id>
+    <subject-type>Party</subject-type>
+    <updated-at type="datetime">2014-02-11T07:24:42Z</updated-at>
+    <visible-to>Everyone</visible-to>
+    <body>
+      This is a note for a person
+    </body>
+    <subject-name>John Doe</subject-name>
+  </note>
+  <note>
+    <author-id type="integer">946123</author-id>
+    <collection-id type="integer" nil="true"/>
+    <collection-type nil="true"/>
+    <created-at type="datetime">2014-01-12T09:11:47Z</created-at>
+    <group-id type="integer" nil="true"/>
+    <id type="integer">172745235</id>
+    <owner-id type="integer" nil="true"/>
+    <subject-id type="integer">125011790</subject-id>
+    <subject-type>Party</subject-type>
+    <updated-at type="datetime">2014-01-12T09:11:47Z</updated-at>
+    <visible-to>Everyone</visible-to>
+    <body>
+      This is another note
+    </body>
+    <subject-name>John Doe</subject-name>
+  </note>
+  <note>
+    <author-id type="integer">946123</author-id>
+    <collection-id type="integer" nil="true"/>
+    <collection-type nil="true"/>
+    <created-at type="datetime">2014-01-12T09:11:22Z</created-at>
+    <group-id type="integer" nil="true"/>
+    <id type="integer">172745178</id>
+    <owner-id type="integer" nil="true"/>
+    <subject-id type="integer">125011790</subject-id>
+    <subject-type>Party</subject-type>
+    <updated-at type="datetime">2014-01-12T09:11:22Z</updated-at>
+    <visible-to>Everyone</visible-to>
+    <body>
+      This is yet another note
+    </body>
+    <subject-name>John Doe</subject-name>
+  </note>
+</notes>

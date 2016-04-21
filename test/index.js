@@ -28,6 +28,14 @@ describe('Highrise', () => {
         console.log(err.stack)
       })
     })
+    it('should parse note records', (done) => {
+      readToParser('test/examples/notes.xml', new Parser()).then((notes) => {
+        assert.equal(3, notes.length)
+        done()
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
   })
 })
 

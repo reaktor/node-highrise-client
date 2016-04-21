@@ -136,6 +136,35 @@ class ContactDataHandler extends Handler {
   }
 }
 
+class NoteHandler extends Handler {
+  constructor(parent) {
+    super()
+    this.parent = parent
+    this.note = {}
+  }
+  opentag(opts) {
+    this.tagName = opts.name
+    this.type = opts.attributes.type || "text"
+    this.tagValue = null
+    return this
+  }
+  text(opts) {
+    this.tagValue = parseTextNode(opts, this.type)
+    return this
+  }
+  closetag(tagName) {
+    switch (tagName) {
+      case "note":
+        this.parent.onchildover(this.note)
+        return this.parent
+      default:
+        this.note[tagName] = this.tagValue
+        break;
+    }
+    return this
+  }
+}
+
 class EmailHandler extends Handler {
   constructor(parent) {
     super()
@@ -224,6 +253,8 @@ class RootHandler extends Handler {
   }
   opentag(opts) {
     switch (opts.name) {
+      case 'note':
+        return new NoteHandler(this)
       case 'email':
         return new EmailHandler(this)
       case 'person':
