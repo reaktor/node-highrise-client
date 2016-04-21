@@ -166,9 +166,33 @@ class GenericTagHandler extends Handler {
   }
 }
 
+class AttachmentsHandler extends GenericTagHandler {
+  constructor(parent) {
+    super(parent, "attachment")
+  }
+}
+
 class NoteHandler extends GenericTagHandler {
   constructor(parent) {
     super(parent, "note")
+    this.data.attachments = []
+  }
+  opentag(opts) {
+    if (opts.name == 'attachments') {
+      return new AttachmentsHandler(this)
+    } else {
+      return super.opentag(opts)
+    }
+  }
+  onchildover(data) {
+    this.data.attachments.push(data)
+  }
+  closetag(name) {
+    if (name == 'attachments') {
+      return this
+    } else {
+      return super.closetag(name)
+    }
   }
 }
 

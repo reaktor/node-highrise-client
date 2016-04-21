@@ -32,6 +32,14 @@
       This is another note
     </body>
     <subject-name>John Doe</subject-name>
+    <attachments type="array">
+      <attachment>
+        <id type="integer">13391</id>
+        <url>https://example.highrisehq.com/files/13391</url>
+        <name>file.png</name>
+        <size type="integer">21572</size>
+      </attachment>
+    </attachments>
   </note>
   <note>
     <author-id type="integer">946123</author-id>

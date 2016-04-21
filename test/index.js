@@ -31,6 +31,7 @@ describe('Highrise', () => {
     it('should parse note records', (done) => {
       readToParser('test/examples/notes.xml', new Parser()).then((notes) => {
         assert.equal(3, notes.length)
+        assert.equal(13391, notes[1].attachments[0].id)
         done()
       }).catch((err) => {
         console.log(err.stack)
