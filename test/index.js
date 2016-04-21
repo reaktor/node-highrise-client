@@ -4,16 +4,18 @@ const fs     = require('fs')
 
 describe('Highrise', () => {
   describe('Parser', () => {
-    it('should parse person records', () => {
+    it('should parse person records', (done) => {
       readToParser('test/examples/person.xml', new Parser()).then((person) => {
-        //console.log(person)
+        assert.equal('Partner', person.tags[0].name)
+        done()
       }).catch((err) => {
         console.log(err.stack)
       })
     })
-    it('should parse tags records', () => {
-      readToParser('test/examples/tags.xml', new Parser()).then((person) => {
-        console.log(person)
+    it('should parse tags records', (done) => {
+      readToParser('test/examples/tags.xml', new Parser()).then((persons) => {
+        assert.equal(2, persons.length)
+        done()
       }).catch((err) => {
         console.log(err.stack)
       })

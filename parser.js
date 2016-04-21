@@ -217,11 +217,19 @@ class RootHandler extends Handler {
           return this
         }
       default:
+        if (opts.attributes.type == 'array') {
+          this.value = []
+          this.isArray = true
+        }
         return this
     }
   }
   onchildover(data) {
-    this.value = data
+    if (this.isArray) {
+      this.value.push(data)
+    } else {
+      this.value = data
+    }
     return this
   }
   closetag(tagName) {
