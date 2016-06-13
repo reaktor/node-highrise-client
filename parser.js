@@ -267,6 +267,8 @@ class RootHandler extends Handler {
         return new EmailHandler(this)
       case 'person':
         return new PersonHandler(this)
+      case 'tags':
+        return new TagsHandler(this)
       case 'party':
         if (opts.attributes.type == 'Person') {
           return new PersonHandler(this, "party")

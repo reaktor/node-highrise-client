@@ -37,6 +37,16 @@ describe('Highrise', () => {
         console.log(err.stack)
       })
     })
+    it('should parse tag root records', (done) => {
+      readToParser('test/examples/tags_root.xml', new Parser()).then((tags) => {
+        assert.equal(4, tags.length)
+        assert.equal("foobar", tags[0].name)
+        assert.equal(9840, tags[3].id)
+        done()
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
   })
 })
 

@@ -1,0 +1,18 @@
+<tags type="array">
+    <tag>
+        <id type="integer">3333</id>
+        <name>foobar</name>
+    </tag>
+    <tag>
+        <id type="integer">31215</id>
+        <name>barbaz</name>
+    </tag>
+    <tag>
+        <id type="integer">5262</id>
+        <name>sold</name>
+    </tag>
+    <tag>
+        <id type="integer">9840</id>
+        <name>lost</name>
+    </tag>
+</tags>
