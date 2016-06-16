@@ -47,6 +47,15 @@ describe('Highrise', () => {
         console.log(err.stack)
       })
     })
+    it('should parse tag responses', (done) => {
+      readToParser('test/examples/tag.xml', new Parser()).then((tag) => {
+        assert.equal("closed", tag.name)
+        assert.equal(19751341, tag.id)
+        done()
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
   })
 })
 

@@ -56,11 +56,10 @@ class SubjectDataHandler extends Handler {
   }
 }
 
-class TagsHandler extends Handler {
+class TagHandler extends Handler {
   constructor(parent) {
     super()
     this.parent = parent
-    this.tags = []
   }
   opentag(opts) {
     this.tagName = opts.name
@@ -78,13 +77,48 @@ class TagsHandler extends Handler {
     return this
   }
   closetag(name) {
-    this.tagName = null
     if (name == "tag") {
-      this.tags.push({
+      this.parent.onchildover({
         id: this.id,
         name: this.name
       })
-    } else if (name == "tags") {
+      return this.parent
+    } else {
+      this.tagName = null
+      return this
+    }
+  }
+}
+
+class TagsHandler extends Handler {
+  constructor(parent) {
+    super()
+    this.parent = parent
+    this.tags = []
+  }
+  opentag(opts) {
+    if (opts.name == 'tag') {
+      return new TagHandler(this)
+    } else {
+      return this
+    }
+  }
+  text(opts) {
+    switch (this.tagName) {
+      case "id":
+        this.id = parseInt(opts, 10)
+        break
+      case "name":
+        this.name = opts
+        break
+    }
+    return this
+  }
+  onchildover(data) {
+    this.tags.push(data)
+  }
+  closetag(name) {
+    if (name == "tags") {
       this.parent.onchildover(this.tags)
       return this.parent
     }
@@ -269,6 +303,8 @@ class RootHandler extends Handler {
         return new PersonHandler(this)
       case 'tags':
         return new TagsHandler(this)
+      case 'tag':
+        return new TagHandler(this)
       case 'party':
         if (opts.attributes.type == 'Person') {
           return new PersonHandler(this, "party")
