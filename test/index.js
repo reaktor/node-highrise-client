@@ -56,6 +56,17 @@ describe('Highrise', () => {
         console.log(err.stack)
       })
     })
+    it('should parse user responses', (done) => {
+      readToParser('test/examples/user.xml', new Parser()).then((user) => {
+        assert.equal("foobarfoobarfoobarfoobarfoobar", user.token)
+        assert.equal(true, user.admin)
+        assert.equal("Test User", user.name)
+        assert.equal(new Date(Date.UTC(2010, 0, 1, 7, 4, 37)).toString(), user['created-at'].toString())
+        done()
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
   })
 })
 

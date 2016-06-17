@@ -1,0 +1,10 @@
+<user>
+    <created-at type="datetime">2010-01-01T07:04:37Z</created-at>
+    <id type="integer">198565</id>
+    <token>foobarfoobarfoobarfoobarfoobar</token>
+    <updated-at type="datetime">2015-02-24T12:34:35Z</updated-at>
+    <dropbox>dropbox@195718275.foobar.highrisehq.com</dropbox>
+    <name>Test User</name>
+    <email-address>test.user@example.org</email-address>
+    <admin type="boolean">true</admin>
+</user>

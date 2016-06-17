@@ -208,6 +208,12 @@ class EmailHandler extends GenericTagHandler {
   }
 }
 
+class UserHandler extends GenericTagHandler {
+  constructor(parent) {
+    super(parent, "user")
+  }
+}
+
 class PersonHandler extends Handler {
   constructor(parent, rootTagName) {
     super()
@@ -277,6 +283,8 @@ class RootHandler extends Handler {
         return new TagsHandler(this)
       case 'tag':
         return new TagHandler(this)
+      case 'user':
+        return new UserHandler(this)
       case 'party':
         if (opts.attributes.type == 'Person') {
           return new PersonHandler(this, "party")
@@ -332,7 +340,9 @@ module.exports = class Parser {
 }
 
 function parseTextNode(text, type) {
-  if (type == 'integer') {
+  if (type == 'boolean') {
+    return (text === 'true')
+  } else if (type == 'integer') {
     const value = parseInt(text, 10)
     if (!isNaN(value)) {
       return value
