@@ -56,40 +56,6 @@ class SubjectDataHandler extends Handler {
   }
 }
 
-class TagHandler extends Handler {
-  constructor(parent) {
-    super()
-    this.parent = parent
-  }
-  opentag(opts) {
-    this.tagName = opts.name
-    return this
-  }
-  text(opts) {
-    switch (this.tagName) {
-      case "id":
-        this.id = parseInt(opts, 10)
-        break
-      case "name":
-        this.name = opts
-        break
-    }
-    return this
-  }
-  closetag(name) {
-    if (name == "tag") {
-      this.parent.onchildover({
-        id: this.id,
-        name: this.name
-      })
-      return this.parent
-    } else {
-      this.tagName = null
-      return this
-    }
-  }
-}
-
 class TagsHandler extends Handler {
   constructor(parent) {
     super()
@@ -197,6 +163,12 @@ class GenericTagHandler extends Handler {
         break;
     }
     return this
+  }
+}
+
+class TagHandler extends GenericTagHandler {
+  constructor(parent) {
+    super(parent, "tag")
   }
 }
 
