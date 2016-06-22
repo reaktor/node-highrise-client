@@ -178,9 +178,9 @@ class AttachmentsHandler extends GenericTagHandler {
   }
 }
 
-class NoteHandler extends GenericTagHandler {
-  constructor(parent) {
-    super(parent, "note")
+class AttachmentAwareHandler extends GenericTagHandler {
+  constructor(parent, tag) {
+    super(parent, tag)
     this.data.attachments = []
   }
   opentag(opts) {
@@ -202,7 +202,13 @@ class NoteHandler extends GenericTagHandler {
   }
 }
 
-class EmailHandler extends GenericTagHandler {
+class NoteHandler extends AttachmentAwareHandler {
+  constructor(parent) {
+    super(parent, "note")
+  }
+}
+
+class EmailHandler extends AttachmentAwareHandler {
   constructor(parent) {
     super(parent, "email")
   }

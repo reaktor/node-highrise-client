@@ -23,6 +23,9 @@ describe('Highrise', () => {
     it('should parse email records', (done) => {
       readToParser('test/examples/emails.xml', new Parser()).then((emails) => {
         assert.equal(4, emails.length)
+        assert.equal(1, emails[0].attachments.length)
+        assert.equal(0, emails[1].attachments.length)
+        assert.equal("https://example.highrisehq.com/files/14449", emails[0].attachments[0].url)
         done()
       }).catch((err) => {
         console.log(err.stack)

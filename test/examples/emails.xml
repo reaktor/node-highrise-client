@@ -16,6 +16,14 @@
     </body>
     <subject-name>John Doe</subject-name>
     <title>Re: Your message</title>
+    <attachments type="array">
+      <attachment>
+        <id type="integer">14449</id>
+        <url>https://example.highrisehq.com/files/14449</url>
+        <name>english.pdf</name>
+        <size type="integer">3466</size>
+      </attachment>
+    </attachments>
   </email>
   <email>
     <author-id type="integer">1069176</author-id>
