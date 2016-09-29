@@ -7,6 +7,7 @@ describe('Highrise', () => {
     it('should parse person records', (done) => {
       readToParser('test/examples/person.xml', new Parser()).then((person) => {
         assert.equal('Partner', person.tags[0].name)
+        person.emails.forEach(e => assert.isDefined(e.id))
         done()
       }).catch((err) => {
         console.log(err.stack)
