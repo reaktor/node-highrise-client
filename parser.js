@@ -106,6 +106,7 @@ class ContactDataHandler extends Handler {
   text(opts) {
     switch (this.tagName) {
       case "address":
+      case "id":
       case "number":
       case "location":
         this[this.tagName] = opts
@@ -118,6 +119,7 @@ class ContactDataHandler extends Handler {
     switch (name) {
       case "email-address":
         this.emails.push({
+          id: this.id,
           address: this.address,
           location: this.location
         })
