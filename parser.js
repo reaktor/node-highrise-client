@@ -106,6 +106,7 @@ class ContactDataHandler extends Handler {
   text(opts) {
     switch (this.tagName) {
       case "address":
+      case "id":
       case "number":
       case "location":
         this[this.tagName] = opts
@@ -118,6 +119,7 @@ class ContactDataHandler extends Handler {
     switch (name) {
       case "email-address":
         this.emails.push({
+          id: this.id,
           address: this.address,
           location: this.location
         })
@@ -166,17 +168,39 @@ class GenericTagHandler extends Handler {
   }
 }
 
+class GenericArrayHandler extends GenericTagHandler {
+  constructor(parent, rootTagName) {
+    super()
+    this.parent = parent
+    this.data = []
+    this.rootTagName = rootTagName
+  }
+  opentag(opts) {
+    this.tagName = opts.name
+    this.type = opts.attributes.type || "text"
+    this.tagValue = null
+
+    return new GenericTagHandler(this, opts.name)
+  }
+  closetag(tagName) {
+    if (tagName == this.rootTagName) {
+        this.parent.onchildover(this.data)
+        return this.parent
+    }
+
+    return this
+  }
+  onchildover(data) {
+    this.data.push(data)
+  }
+}
+
 class TagHandler extends GenericTagHandler {
   constructor(parent) {
     super(parent, "tag")
   }
 }
 
-class AttachmentsHandler extends GenericTagHandler {
-  constructor(parent) {
-    super(parent, "attachment")
-  }
-}
 
 class AttachmentAwareHandler extends GenericTagHandler {
   constructor(parent, tag) {
@@ -185,13 +209,13 @@ class AttachmentAwareHandler extends GenericTagHandler {
   }
   opentag(opts) {
     if (opts.name == 'attachments') {
-      return new AttachmentsHandler(this)
+      return new GenericArrayHandler(this, 'attachments')
     } else {
       return super.opentag(opts)
     }
   }
   onchildover(data) {
-    this.data.attachments.push(data)
+    this.data.attachments = data
   }
   closetag(name) {
     if (name == 'attachments') {
