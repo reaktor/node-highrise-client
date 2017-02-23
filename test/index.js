@@ -71,6 +71,17 @@ describe('Highrise', () => {
         console.log(err.stack)
       })
     })
+    it('should parse custom field definitions', (done) => {
+      readToParser('test/examples/custom_fields.xml', new Parser()).then((fields) => {
+        assert.equal(2, fields.length)
+        assert.strictEqual(1234, fields[0].id)
+        assert.equal("Custom field 1", fields[0].label)
+        assert.equal("party", fields[1].type)
+        done()
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
   })
 })
 

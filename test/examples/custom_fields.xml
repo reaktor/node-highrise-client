@@ -1,0 +1,12 @@
+<subject-fields type="array">
+  <subject-field>
+    <id type="integer">1234</id>
+    <label>Custom field 1</label>
+    <type>party</type>
+  </subject-field>
+  <subject-field>
+    <id type="integer">1235</id>
+    <label>Custom field 2</label>
+    <type>party</type>
+  </subject-field>
+</subject-fields>

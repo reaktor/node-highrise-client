@@ -321,6 +321,8 @@ class RootHandler extends Handler {
         } else {
           return this
         }
+      case 'subject-fields':
+        return new GenericArrayHandler(this, 'subject-fields')
       default:
         if (opts.attributes.type == 'array') {
           this.value = []
