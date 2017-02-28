@@ -227,14 +227,14 @@ class AttachmentAwareHandler extends GenericTagHandler {
 }
 
 class NoteHandler extends AttachmentAwareHandler {
-  constructor(parent) {
-    super(parent, "note")
+  constructor(parent, tagName) {
+    super(parent, tagName || "note")
   }
 }
 
 class EmailHandler extends AttachmentAwareHandler {
-  constructor(parent) {
-    super(parent, "email")
+  constructor(parent, tagName) {
+    super(parent, tagName || "email")
   }
 }
 
@@ -297,6 +297,37 @@ class PersonHandler extends Handler {
   }
 }
 
+class RecordingsHandler extends Handler {
+  constructor(parent) {
+    super()
+    this.parent = parent;
+    this.tagType = undefined;
+    this.recordings = { emails: [], notes: [], comments: [] };
+  }
+  opentag(opts) {
+    if (opts.attributes.type == "Email") {
+      this.tagType = "emails";
+      return new EmailHandler(this, "recording");
+    } else if (opts.attributes.type == "Note") {
+      this.tagType = "notes";
+      return new NoteHandler(this, "recording");
+    } else {
+      this.tagType = "comments";
+      return new GenericTagHandler(this, opts.name);
+    }
+  }
+  closetag(tagName) {
+    if (tagName === "recordings") {
+      this.parent.onchildover(this.recordings);
+      return this.parent;
+    }
+    return this;
+  }
+  onchildover(recording) {
+    this.recordings[this.tagType].push(recording);
+  }
+}
+
 class RootHandler extends Handler {
   constructor() {
     super()
@@ -323,6 +354,8 @@ class RootHandler extends Handler {
         }
       case 'subject-fields':
         return new GenericArrayHandler(this, 'subject-fields')
+      case 'recordings':
+        return new RecordingsHandler(this)
       default:
         if (opts.attributes.type == 'array') {
           this.value = []

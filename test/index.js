@@ -82,6 +82,18 @@ describe('Highrise', () => {
         console.log(err.stack)
       })
     })
+    it('should parse recordings', (done) => {
+      readToParser('test/examples/recordings.xml', new Parser()).then((recordings) => {
+        assert.equal(1, recordings.emails.length)
+        assert.equal(1, recordings.notes.length)
+        assert.equal("email title", recordings.emails[0].title)
+        assert.equal("email subject", recordings.emails[0]["subject-name"])
+        assert.equal("sample.pdf", recordings.notes[0].attachments[0].name)
+        done()
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
   })
 })
 
