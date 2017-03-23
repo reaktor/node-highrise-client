@@ -1,0 +1,53 @@
+<companies type="array">
+  <company>
+    <author-id type="integer">6667</author-id>
+    <background nil="true"/>
+    <created-at type="datetime">2012-11-07T07:57:39Z</created-at>
+    <group-id type="integer" nil="true"/>
+    <id type="integer">1234567</id>
+    <owner-id type="integer" nil="true"/>
+    <updated-at type="datetime">2015-05-25T11:45:26Z</updated-at>
+    <visible-to>Everyone</visible-to>
+    <name>Cuicca Oy</name>
+    <avatar_url>avatar</avatar_url>
+    <contact-data>
+      <twitter-accounts type="array">
+        <twitter-account>
+          <id type="integer">1</id>
+          <location>Work</location>
+          <username>cuicca</username>
+          <url>http://not-twitter.com/cuicca</url>
+        </twitter-account>
+      </twitter-accounts>
+      <addresses type="array"/>
+      <email-addresses type="array"/>
+      <phone-numbers type="array"/>
+      <instant-messengers type="array"/>
+      <web-addresses type="array"/>
+    </contact-data>
+  </company>
+  <company>
+    <author-id type="integer">6667</author-id>
+    <background nil="true"/>
+    <created-at type="datetime">2013-02-12T14:35:29Z</created-at>
+    <group-id type="integer" nil="true"/>
+    <id type="integer">1234568</id>
+    <owner-id type="integer" nil="true"/>
+    <updated-at type="datetime">2015-02-09T13:41:02Z</updated-at>
+    <visible-to>Everyone</visible-to>
+    <name>Cuicca Ltd</name>
+    <avatar_url>avatar</avatar_url>
+    <contact-data>
+      <addresses type="array">
+        <address>
+          <id type="integer">1</id>
+            <city>Helsinki</city>
+            <country>Funland</country>
+            <state>Uusimaa</state>
+            <street>Näätäkuja 8</street>
+            <zip>123456</zip>
+          <location>Work</location>
+        </address>
+      </addresses>
+    </contact-data>
+  </company>

@@ -98,6 +98,10 @@ class ContactDataHandler extends Handler {
     this.parent = parent
     this.emails = []
     this.phones = []
+    this.addresses = []
+    this.webAddresses = []
+    this.twitterAccounts = []
+    this.instantMessengers = []
   }
   opentag(opts) {
     this.tagName = opts.name
@@ -109,6 +113,14 @@ class ContactDataHandler extends Handler {
       case "id":
       case "number":
       case "location":
+      case "city":
+      case "country":
+      case "state":
+      case "street":
+      case "zip":
+      case "protocol":
+      case "username":
+      case "url":
         this[this.tagName] = opts
         break
     }
@@ -126,9 +138,44 @@ class ContactDataHandler extends Handler {
         break
       case "phone-number":
         this.phones.push({
+          id: this.id,
           number: this.number,
           location: this.location
         })
+        break
+      case "address":
+        this.addresses.push({
+          id: this.id,
+          city: this.city,
+          country: this.country,
+          state: this.state,
+          street: this.street,
+          zip: this.zip,
+          location: this.location
+        })
+        break
+      case "instant-messenger":
+        this.instantMessengers.push({
+          id: this.id,
+          address: this.address,
+          protocol: this.protocol,
+          location: this.location
+        })
+        break
+      case "twitter-account":
+        this.twitterAccounts.push({
+          id: this.id,
+          location: this.location,
+          username: this.username,
+          url: this.url
+        })
+        break
+      case "web-address":
+        this.webAddresses.push({
+          id: this.id,
+          url: this.url,
+          location: this.location
+        })  
         break
       case "contact-data":
         this.parent.onchildover(this)
@@ -244,11 +291,11 @@ class UserHandler extends GenericTagHandler {
   }
 }
 
-class PersonHandler extends Handler {
+class PartyHandler extends Handler {
   constructor(parent, rootTagName) {
     super()
     this.parent = parent
-    this.person = {}
+    this.party = {}
     this.rootTagName = rootTagName || "person"
   }
   opentag(opts) {
@@ -277,22 +324,26 @@ class PersonHandler extends Handler {
       case "tags":
         break;
       case this.rootTagName:
-        this.parent.onchildover(this.person)
+        this.parent.onchildover(this.party)
         return this.parent
       default:
-        this.person[tagName] = this.tagValue
+        this.party[tagName] = this.tagValue
         break;
     }
     return this
   }
   onchildover(data) {
     if (this.tagName == 'contact-data') {
-      this.person.emails = data.emails
-      this.person.phones = data.phones
+      this.party.emails = data.emails
+      this.party.phones = data.phones
+      this.party.addresses = data.addresses
+      this.party.webAddresses = data.webAddresses
+      this.party.twitterAccounts = data.twitterAccounts
+      this.party.instantMessengers = data.instantMessengers
     } else if (this.tagName == 'tags') {
-      this.person.tags = data
+      this.party.tags = data
     } else if (this.tagName == 'subject_datas') {
-      this.person.subject_datas = data
+      this.party.subject_datas = data
     }
   }
 }
@@ -339,7 +390,9 @@ class RootHandler extends Handler {
       case 'email':
         return new EmailHandler(this)
       case 'person':
-        return new PersonHandler(this)
+        return new PartyHandler(this, 'person')
+      case 'company':
+        return new PartyHandler(this, 'company')
       case 'tags':
         return new TagsHandler(this)
       case 'tag':
@@ -347,11 +400,7 @@ class RootHandler extends Handler {
       case 'user':
         return new UserHandler(this)
       case 'party':
-        if (opts.attributes.type == 'Person') {
-          return new PersonHandler(this, "party")
-        } else {
-          return this
-        }
+        return new PartyHandler(this, "party")
       case 'subject-fields':
         return new GenericArrayHandler(this, 'subject-fields')
       case 'recordings':

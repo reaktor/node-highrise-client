@@ -94,6 +94,18 @@ describe('Highrise', () => {
         console.log(err.stack)
       })
     })
+    it('should parse companies', (done) => {
+      readToParser('test/examples/companies.xml', new Parser()).then((companies) => {
+        assert.equal(2, companies.length)
+        assert.equal('Cuicca Oy', companies[0].name)
+        assert.equal('Cuicca Ltd', companies[1].name)
+        assert.equal('cuicca', companies[0].twitterAccounts[0].username)
+        assert.equal('Näätäkuja 8', companies[1].addresses[0].street)
+        done()
+      }).catch((err) => {
+        console.log(err.stack)
+      })
+    })
   })
 })
 
